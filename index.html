@@ -105,6 +105,24 @@
     return earthMaterial;
   }
 
+  function createBackground() {
+    var SphereGeometry = new THREE.SphereGeometry(90,32,32);
+
+    var backgroundTexture = new THREE.Texture();
+    var loader = new THREE.ImageLoader();
+    loader.load('assets/galaxy_starfield.png', function(image) {
+      backgroundTexture.image = image;
+      backgroundTexture.needsUpdate = true;
+    });
+
+    var backgroundMaterial  = new THREE.MeshBasicMaterial()
+    backgroundMaterial.map  = backgroundTexture;
+    backgroundMaterial.side = THREE.BackSide;
+
+    var mesh = new THREE.Mesh(SphereGeometry, backgroundMaterial);
+    scene.add(mesh);
+  }
+
   function init() {
     scene = new THREE.Scene();
 
@@ -113,6 +131,7 @@
     createLight();
     createEarth();
     createClouds();
+    createBackground();
     document.body.appendChild(renderer.domElement);
     render();
   }
